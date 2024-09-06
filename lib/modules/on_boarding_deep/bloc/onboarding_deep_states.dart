@@ -64,3 +64,9 @@ class OnboardingDeepPhysicalLevelState extends OnboardingDeepStates {
   @override
   List<Object> get props => [physicalLevel];
 }
+
+class OnboardingDeepErrorState extends OnboardingDeepStates {
+  final String message;
+
+  const OnboardingDeepErrorState(this.message);
+}
