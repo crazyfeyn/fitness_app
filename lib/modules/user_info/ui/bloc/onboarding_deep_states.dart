@@ -11,6 +11,10 @@ class OnboardingDeepInitialState extends OnboardingDeepStates {
   const OnboardingDeepInitialState();
 }
 
+class OnboardingDeepLoadingState extends OnboardingDeepStates {
+  const OnboardingDeepLoadingState();
+}
+
 class OnboardingDeepGenderState extends OnboardingDeepStates {
   final String gender;
 
@@ -30,7 +34,7 @@ class OnboardingDeepAgeState extends OnboardingDeepStates {
 }
 
 class OnboardingDeepWeightState extends OnboardingDeepStates {
-  final double weight;
+  final int weight;
 
   const OnboardingDeepWeightState(this.weight);
 
@@ -39,7 +43,7 @@ class OnboardingDeepWeightState extends OnboardingDeepStates {
 }
 
 class OnboardingDeepHeightState extends OnboardingDeepStates {
-  final double height;
+  final int height;
 
   const OnboardingDeepHeightState(this.height);
 
@@ -69,4 +73,22 @@ class OnboardingDeepErrorState extends OnboardingDeepStates {
   final String message;
 
   const OnboardingDeepErrorState(this.message);
+}
+
+class OnboardingDeepSetUserInfoState extends OnboardingDeepStates {
+  final String gender;
+  final int age;
+  final int weight;
+  final int height;
+  final String goal;
+  final String physicalActivityLevel;
+
+  const OnboardingDeepSetUserInfoState({
+    required this.gender,
+    required this.age,
+    required this.weight,
+    required this.height,
+    required this.goal,
+    required this.physicalActivityLevel,
+  });
 }

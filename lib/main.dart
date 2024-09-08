@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/modules/gender/ui/gender_screen.dart';
+import 'package:flutter_application/modules/auth/blocs/auth_bloc.dart';
+import 'package:flutter_application/modules/auth/data/repositories/auth_repository.dart';
+import 'package:flutter_application/modules/auth/data/services/auth_service.dart';
+import 'package:flutter_application/modules/auth/ui/login_screen.dart';
+import 'package:flutter_application/modules/auth/ui/register_screen.dart';
+import 'package:flutter_application/modules/user_info/ui/user_info_screen.dart';
 import 'package:flutter_application/modules/home/ui/home_screen.dart';
 import 'package:flutter_application/modules/on_boarding/cubit/on_boarding_cubit.dart';
 import 'package:flutter_application/modules/on_boarding/ui/onboarding_screen.dart';
-import 'package:flutter_application/modules/on_boarding_deep/bloc/onboarding_deep_bloc.dart';
-import 'package:flutter_application/modules/on_boarding_deep/ui/onboarding_deep.dart';
+import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_bloc.dart';
 import 'package:flutter_application/modules/splash/ui/splash_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +24,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = AuthService();
+    final authRepository = AuthRepository(authService: authService);
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (ctx) {
@@ -28,14 +34,27 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (ctx) {
             return OnboardingDeepBloc();
           }),
+          BlocProvider(create: (ctx) {
+            return AuthBloc(authRepository: authRepository);
+          }),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const GenderScreen(),
+          home: const RegisterScreen(),
           routes: {
             '/homeScreen': (context) => const HomeScreen(),
             '/splashScreen': (context) => const SplashScreen(),
             '/onboardingScreen': (context) => const OnboardingScreen(),
+            '/userInfoScreen': (context) {
+              final args = ModalRoute.of(context)!.settings.arguments
+                  as Map<String, String>;
+              return UserInfoScreen(
+                email: args['email']!,
+                password: args['password']!,
+              );
+            },
+            '/registerScreen': (context) => const RegisterScreen(),
+            '/loginScreen': (context) => const LoginScreen(),
           },
         ));
   }

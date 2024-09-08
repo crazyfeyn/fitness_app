@@ -41,3 +41,27 @@ class OnboardingDeepEventsPhysicalLevel extends OnboardingDeepEvents {
 
   OnboardingDeepEventsPhysicalLevel(this.physicalLevel);
 }
+
+class OnboardingDeepNextPageEvent extends OnboardingDeepEvents {
+  int pageIndex;
+
+  OnboardingDeepNextPageEvent(this.pageIndex);
+}
+
+class OnboardingDeepPreviousPageEvent extends OnboardingDeepEvents {
+  int pageIndex;
+
+  OnboardingDeepPreviousPageEvent(this.pageIndex);
+}
+
+class OnboardingDeepSetUserInfoEvent extends OnboardingDeepEvents {
+  final String gender;
+  final int age;
+  final int weight;
+  final int height;
+  final String goal;
+  final String physicalActivityLevel;
+
+  const OnboardingDeepSetUserInfoEvent(this.gender, this.age, this.weight,
+      this.height, this.goal, this.physicalActivityLevel);
+}
