@@ -12,13 +12,13 @@ class OnboardingDeepBloc
   final userService = UserService();
 
   void _onSetUserInfo(OnboardingDeepSetUserInfoEvent event,
-      Emitter<OnboardingDeepStates> emit) {
+      Emitter<OnboardingDeepStates> emit) async {
     emit(const OnboardingDeepLoadingState());
     try {
-      // userService.addUser(name: event, age: age, email: email, gender: gender, goal: goal, height: height, level: level, weight: weight)
-      emit(OnboardingDeepSetUserInfoState(
-       userInfoModel: event.userInfoModel
-      ));
+      print('first');
+      await userService.addUser(userInfoModel: event.userInfoModel);
+      emit(OnboardingDeepSetUserInfoState(userInfoModel: event.userInfoModel));
+      print('second');
     } catch (e) {
       emit(OnboardingDeepErrorState(e.toString()));
     }
