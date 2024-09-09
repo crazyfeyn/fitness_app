@@ -28,7 +28,6 @@ class AuthService {
 
       return userCredential.user;
     } catch (e) {
-      print("Kirishda xatolik: $e");
       rethrow;
     }
   }
@@ -42,5 +41,33 @@ class AuthService {
   Future<bool> checkAuthentication() async {
     User? currentUser = _firebaseAuth.currentUser;
     return currentUser != null;
+  }
+
+  // Tokenni olish
+  Future<String?> getToken() async {
+    try {
+      User? currentUser = _firebaseAuth.currentUser;
+      if (currentUser != null) {
+        String? token = await currentUser.getIdToken();
+        return token;
+      }
+      return null;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // Tokenni yangilash
+  Future<String?> refreshToken() async {
+    try {
+      User? currentUser = _firebaseAuth.currentUser;
+      if (currentUser != null) {
+        String? token = await currentUser.getIdToken(true); // force refresh
+        return token;
+      }
+      return null;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

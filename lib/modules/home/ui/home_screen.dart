@@ -18,13 +18,16 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "HELLO SARAH,",
-                style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
+               GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/profileScreen'),
+                 child: const Text(
+                  "HELLO SARAH,",
+                  style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                               ),
+               ),
               const Text(
                 "Good morning",
                 style: TextStyle(
@@ -59,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: const DecorationImage(
-                        image: AssetImage("assets/images/rasm1.png"),
+                        image: AssetImage("assets/images/onboarding_first.png"),
                         fit: BoxFit.cover)),
                 padding: const EdgeInsets.all(20),
                 child: const Column(
@@ -108,9 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    workoutCategoriy("rasm1.png", "Learn the Basic of Training",
+                    workoutCategoriy(
+                        "onboarding_first.png",
+                        "Learn the Basic of Training",
                         "06 Workouts  for Beginner"),
-                    workoutCategoriy("rasm2.png", "Learn the Basic of Training",
+                    workoutCategoriy(
+                        "onboarding_first.png",
+                        "Learn the Basic of Training",
                         "06 Workouts  for Beginner"),
                   ],
                 ),
@@ -128,11 +135,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    newWorkouts("rasm3.png", "Learn the Basic of Training",
+                    newWorkouts(
+                        "onboarding_first.png",
+                        "Learn the Basic of Training",
                         "06 Workouts  for Beginner"),
-                    newWorkouts("rasm4.png", "Learn the Basic of Training",
+                    newWorkouts(
+                        "onboarding_first.png",
+                        "Learn the Basic of Training",
                         "06 Workouts  for Beginner"),
-                    newWorkouts("rasm1.png", "Learn the Basic of Training",
+                    newWorkouts(
+                        "onboarding_first.png",
+                        "Learn the Basic of Training",
                         "06 Workouts  for Beginner"),
                   ],
                 ),

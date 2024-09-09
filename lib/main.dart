@@ -5,6 +5,10 @@ import 'package:flutter_application/modules/auth/data/repositories/auth_reposito
 import 'package:flutter_application/modules/auth/data/services/auth_service.dart';
 import 'package:flutter_application/modules/auth/ui/login_screen.dart';
 import 'package:flutter_application/modules/auth/ui/register_screen.dart';
+import 'package:flutter_application/modules/profile/ui/edit_profile_screen.dart';
+import 'package:flutter_application/modules/profile/ui/privacy_policy_screen.dart';
+import 'package:flutter_application/modules/profile/ui/profile_screen.dart';
+import 'package:flutter_application/modules/profile/ui/settings_screen.dart';
 import 'package:flutter_application/modules/user_info/ui/user_info_screen.dart';
 import 'package:flutter_application/modules/home/ui/home_screen.dart';
 import 'package:flutter_application/modules/on_boarding/cubit/on_boarding_cubit.dart';
@@ -55,6 +59,10 @@ class MyApp extends StatelessWidget {
             },
             '/registerScreen': (context) => const RegisterScreen(),
             '/loginScreen': (context) => const LoginScreen(),
+            '/editProfileScreen': (context) => const EditProfileScreen(),
+            '/privacyPolicyScreen': (context) => const PrivacyPolicyScreen(),
+            '/settingsScreen': (context) => const SettingsScreen(),
+            '/profileScreen': (context) => const ProfileScreen(),
           },
         ));
   }
