@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter_application/modules/user_info/model/user_info_model.dart';
 
 sealed class OnboardingDeepEvents extends Equatable {
   const OnboardingDeepEvents();
@@ -55,13 +56,7 @@ class OnboardingDeepPreviousPageEvent extends OnboardingDeepEvents {
 }
 
 class OnboardingDeepSetUserInfoEvent extends OnboardingDeepEvents {
-  final String gender;
-  final int age;
-  final int weight;
-  final int height;
-  final String goal;
-  final String physicalActivityLevel;
+  final UserInfoModel userInfoModel;
 
-  const OnboardingDeepSetUserInfoEvent(this.gender, this.age, this.weight,
-      this.height, this.goal, this.physicalActivityLevel);
+  const OnboardingDeepSetUserInfoEvent(this.userInfoModel);
 }

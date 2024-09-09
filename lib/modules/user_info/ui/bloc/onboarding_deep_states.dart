@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_application/modules/user_info/model/user_info_model.dart';
 
 sealed class OnboardingDeepStates extends Equatable {
   const OnboardingDeepStates();
@@ -76,19 +77,7 @@ class OnboardingDeepErrorState extends OnboardingDeepStates {
 }
 
 class OnboardingDeepSetUserInfoState extends OnboardingDeepStates {
-  final String gender;
-  final int age;
-  final int weight;
-  final int height;
-  final String goal;
-  final String physicalActivityLevel;
+  final UserInfoModel userInfoModel;
 
-  const OnboardingDeepSetUserInfoState({
-    required this.gender,
-    required this.age,
-    required this.weight,
-    required this.height,
-    required this.goal,
-    required this.physicalActivityLevel,
-  });
+  const OnboardingDeepSetUserInfoState({required this.userInfoModel});
 }

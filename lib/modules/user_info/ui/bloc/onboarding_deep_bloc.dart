@@ -17,12 +17,7 @@ class OnboardingDeepBloc
     try {
       // userService.addUser(name: event, age: age, email: email, gender: gender, goal: goal, height: height, level: level, weight: weight)
       emit(OnboardingDeepSetUserInfoState(
-        gender: event.gender,
-        age: event.age,
-        weight: event.weight,
-        height: event.height,
-        goal: event.goal,
-        physicalActivityLevel: event.physicalActivityLevel,
+       userInfoModel: event.userInfoModel
       ));
     } catch (e) {
       emit(OnboardingDeepErrorState(e.toString()));

@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/core/constants/app_constants.dart';
+import 'package:flutter_application/modules/user_info/model/user_info_model.dart';
 import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_bloc.dart';
 import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_events.dart';
 import 'package:flutter_application/modules/user_info/ui/widgets/activity_level_selector.dart';
@@ -101,14 +100,15 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
       BlocProvider(
         create: (context) => OnboardingDeepBloc()
           ..add(
-            OnboardingDeepSetUserInfoEvent(
-              AppConstants.gender,
-              AppConstants.age,
-              AppConstants.weight,
-              AppConstants.height,
-              AppConstants.goal,
-              AppConstants.physicalActivityLevel,
-            ),
+            OnboardingDeepSetUserInfoEvent(UserInfoModel(
+                name: 'replacement name',
+                weight: AppConstants.weight,
+                age: AppConstants.age,
+                email: widget.email,
+                gender: AppConstants.gender,
+                goal: AppConstants.goal,
+                height: AppConstants.height,
+                level: AppConstants.physicalActivityLevel)),
           ),
       );
     }
@@ -130,7 +130,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     print(widget.email);
-    print(widget.password);
     return Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
