@@ -25,7 +25,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: ElevatedButton.styleFrom(
             backgroundColor: MyColors.arrowBackIconColor,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           icon: const Icon(
             Icons.arrow_back,
             color: MyColors.whiteColor,
