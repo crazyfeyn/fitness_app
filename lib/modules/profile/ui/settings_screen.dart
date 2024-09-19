@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             backgroundColor: MyColors.arrowBackIconColor,
           ),
           onPressed: () {
-            // context.router.push(const ProfileRoute());
+            Navigator.of(context).pop();
           },
           icon: const Icon(
             Icons.arrow_back,

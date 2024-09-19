@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/theme/colors.dart';
+import 'package:flutter_application/modules/auth/blocs/auth_bloc.dart';
+import 'package:flutter_application/modules/auth/blocs/auth_events.dart';
+import 'package:flutter_application/modules/auth/blocs/auth_states.dart';
 import 'package:flutter_application/modules/profile/widgets/custom_list_item_widget.dart';
 import 'package:flutter_application/modules/profile/widgets/custom_subscription_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -180,7 +184,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             CustomListItemWidget(
               color: MyColors.redColor,
               title: "Sign Out",
-              onTap: () {},
+              onTap: () {
+                BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent());
+                Navigator.pushNamed(context, '/loginScreen');
+              },
             ),
             const Padding(
               padding:

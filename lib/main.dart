@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/core/constants/workouts.dart';
 import 'package:flutter_application/modules/auth/blocs/auth_bloc.dart';
 import 'package:flutter_application/modules/auth/data/repositories/auth_repository.dart';
 import 'package:flutter_application/modules/auth/data/services/auth_service.dart';
 import 'package:flutter_application/modules/auth/ui/login_screen.dart';
 import 'package:flutter_application/modules/auth/ui/register_screen.dart';
+import 'package:flutter_application/modules/home/ui/workout_screen.dart';
 import 'package:flutter_application/modules/profile/ui/edit_profile_screen.dart';
 import 'package:flutter_application/modules/profile/ui/privacy_policy_screen.dart';
 import 'package:flutter_application/modules/profile/ui/profile_screen.dart';
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const RegisterScreen(),
+          home: const LoginScreen(),
           routes: {
             '/homeScreen': (context) => const HomeScreen(),
             '/splashScreen': (context) => const SplashScreen(),
@@ -63,6 +65,9 @@ class MyApp extends StatelessWidget {
             '/privacyPolicyScreen': (context) => const PrivacyPolicyScreen(),
             '/settingsScreen': (context) => const SettingsScreen(),
             '/profileScreen': (context) => const ProfileScreen(),
+            '/workoutScreen': (context) => WorkoutScreen(
+                  workoutList: Workouts.workouts,
+                ),
           },
         ));
   }

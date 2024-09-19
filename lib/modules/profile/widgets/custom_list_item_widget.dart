@@ -63,10 +63,12 @@ class CustomList extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, VoidCallback>> items = [
       {
-        "Edit Profile": () => Navigator.pushNamed(context, '/editProfileScreen'),
+        "Edit Profile": () =>
+            Navigator.pushNamed(context, '/editProfileScreen'),
       },
       {
-        "Privacy Policy": () => Navigator.pushNamed(context, '/privacyPolicyScreen'),
+        "Privacy Policy": () =>
+            Navigator.pushNamed(context, '/privacyPolicyScreen'),
       },
       {
         "Settings": () => Navigator.pushNamed(context, '/settingsScreen'),

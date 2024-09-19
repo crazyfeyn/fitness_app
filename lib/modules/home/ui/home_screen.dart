@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/core/ui_kit/functions/general_functions.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,16 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               GestureDetector(
+              GestureDetector(
                 onTap: () => Navigator.pushNamed(context, '/profileScreen'),
-                 child: const Text(
+                child: const Text(
                   "HELLO SARAH,",
                   style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
-                               ),
-               ),
+                ),
+              ),
               const Text(
                 "Good morning",
                 style: TextStyle(
@@ -36,10 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white),
               ),
               const SizedBox(height: 40),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Today Workout Plan",
                     style: TextStyle(
                         fontSize: 17,
@@ -47,43 +48,48 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white),
                   ),
                   Text(
-                    "Mon 26 Apr",
-                    style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xffD0FD3E)),
+                    GeneralFunctions.formatDate(DateTime.now()),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xffD0FD3E),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              Container(
-                width: double.infinity,
-                height: 190,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: const DecorationImage(
-                        image: AssetImage("assets/images/onboarding_first.png"),
-                        fit: BoxFit.cover)),
-                padding: const EdgeInsets.all(20),
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Day 01 - Warm Up",
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      "07:00 - 08:00 AM",
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xffD0FD3E)),
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/workoutScreen'),
+                child: Container(
+                  width: double.infinity,
+                  height: 190,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: const DecorationImage(
+                          image:
+                              AssetImage("assets/images/onboarding_first.png"),
+                          fit: BoxFit.cover)),
+                  padding: const EdgeInsets.all(20),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Day 01 - Warm Up",
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        "07:00 - 08:00 AM",
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xffD0FD3E)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 30),

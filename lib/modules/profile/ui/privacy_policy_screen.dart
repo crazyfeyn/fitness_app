@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
 
@@ -25,7 +24,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
             backgroundColor: MyColors.arrowBackIconColor,
           ),
           onPressed: () {
-            // context.router.push(const ProfileRoute());
+            Navigator.of(context).pop();
           },
           icon: const Icon(
             Icons.arrow_back,

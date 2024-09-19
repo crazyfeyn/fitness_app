@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/core/constants/app_constants.dart';
 import 'package:flutter_application/modules/user_info/model/user_info_model.dart';
 import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_bloc.dart';
 import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_events.dart';
@@ -13,9 +12,9 @@ import 'package:flutter_application/modules/user_info/ui/widgets/weight_selector
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserInfoScreen extends StatefulWidget {
-  String email;
-  String password;
-  UserInfoScreen({super.key, required this.email, required this.password});
+  final String email;
+  final String password;
+  const UserInfoScreen({super.key, required this.email, required this.password});
 
   @override
   State<UserInfoScreen> createState() => _UserInfoScreenState();
