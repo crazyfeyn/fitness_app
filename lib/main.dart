@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/core/constants/workouts.dart';
 import 'package:flutter_application/modules/auth/blocs/auth_bloc.dart';
 import 'package:flutter_application/modules/auth/data/repositories/auth_repository.dart';
 import 'package:flutter_application/modules/auth/data/services/auth_service.dart';
@@ -65,9 +64,13 @@ class MyApp extends StatelessWidget {
             '/privacyPolicyScreen': (context) => const PrivacyPolicyScreen(),
             '/settingsScreen': (context) => const SettingsScreen(),
             '/profileScreen': (context) => const ProfileScreen(),
-            '/workoutScreen': (context) => WorkoutScreen(
-                  workoutList: Workouts.workouts,
-                ),
+            '/workoutScreen': (context) {
+              final args = ModalRoute.of(context)!.settings.arguments
+                  as Map<String, int>;
+              return WorkoutScreen(
+                rangeNumber: args['rangeNumber']!,
+              );
+            }
           },
         ));
   }

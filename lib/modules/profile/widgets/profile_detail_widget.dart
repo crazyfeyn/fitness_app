@@ -5,12 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProfileDetailWidget extends StatelessWidget {
   final String label;
-  final String value;
+  final String initialValue;
+  final Function(String)? onChanged;
+  final TextInputType keyboardType;
 
   const ProfileDetailWidget({
     super.key,
     required this.label,
-    required this.value,
+    required this.initialValue,
+    this.onChanged,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -38,13 +42,18 @@ class ProfileDetailWidget extends StatelessWidget {
                 ),
               ),
               const Gap(5),
-              Text(
-                value,
+              TextFormField(
+                initialValue: initialValue,
                 style: GoogleFonts.openSans(
                   color: MyColors.whiteColor,
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
                 ),
+                keyboardType: keyboardType,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                ),
+                onChanged: onChanged,
               ),
             ],
           ),

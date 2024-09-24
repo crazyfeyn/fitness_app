@@ -13,6 +13,18 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  final TextEditingController _nameController =
+      TextEditingController(text: "Sarah Wegan");
+  final TextEditingController _emailController =
+      TextEditingController(text: "Sarah145@mail.com");
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,13 +93,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ],
               ),
             ),
-            const ProfileDetailWidget(
+            ProfileDetailWidget(
               label: "Name",
-              value: "Sarah Wegan",
+              initialValue: _nameController.text,
+              onChanged: (value) {
+                _nameController.text = value;
+              },
             ),
-            const ProfileDetailWidget(
+            ProfileDetailWidget(
               label: "Email",
-              value: "Sarah145@mail.com",
+              initialValue: _emailController.text,
+              onChanged: (value) {
+                _emailController.text = value;
+              },
+              keyboardType: TextInputType.emailAddress,
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -102,7 +121,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
         child: MainActionButtonWidget(
-          onTap: () {},
+          onTap: () {
+            print('Name: ${_nameController.text}');
+            print('Email: ${_emailController.text}');
+          },
           labelText: "Save",
         ),
       ),

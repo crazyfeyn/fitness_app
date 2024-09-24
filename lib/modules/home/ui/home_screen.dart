@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/functions/general_functions.dart';
+import 'package:flutter_application/modules/home/ui/widgets/net_workouts_widget.dart';
+import 'package:flutter_application/modules/home/ui/widgets/workout_category.dart';
 
 class HomeScreen extends StatefulWidget {
+  //!username qabul qilib ol
   const HomeScreen({super.key});
 
   @override
@@ -9,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final String userName = "Sarah";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,15 +24,22 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/profileScreen'),
-                child: const Text(
-                  "HELLO SARAH,",
-                  style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "HELLO ${userName.toUpperCase()},",
+                    style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/profileScreen'),
+                      child: const CircleAvatar(child: Icon(Icons.person)))
+                ],
               ),
               const Text(
                 "Good morning",
@@ -59,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 20),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/workoutScreen'),
+                onTap: () => Navigator.pushNamed(context, '/workoutScreen',
+                    arguments: {'rangeNumber': 1}),
                 child: Container(
                   width: double.infinity,
                   height: 190,
@@ -113,18 +126,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              SingleChildScrollView(
+              const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    workoutCategoriy(
-                        "onboarding_first.png",
-                        "Learn the Basic of Training",
-                        "06 Workouts  for Beginner"),
-                    workoutCategoriy(
-                        "onboarding_first.png",
-                        "Learn the Basic of Training",
-                        "06 Workouts  for Beginner"),
+                    WorkoutCategoryWidget(
+                        imageUrl: "onboarding_first.png",
+                        title: "Learn the Basic of Training",
+                        subtitle: "06 Workouts for Beginner",
+                        rangeNumber: 2),
+                    WorkoutCategoryWidget(
+                        imageUrl: "onboarding_first.png",
+                        title: "Learn the Basic of Training",
+                        subtitle: "06 Workouts for Beginner",
+                        rangeNumber: 3),
                   ],
                 ),
               ),
@@ -137,22 +152,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white),
               ),
               const SizedBox(height: 20),
-              SingleChildScrollView(
+              const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
+                child: const Row(
                   children: [
-                    newWorkouts(
-                        "onboarding_first.png",
-                        "Learn the Basic of Training",
-                        "06 Workouts  for Beginner"),
-                    newWorkouts(
-                        "onboarding_first.png",
-                        "Learn the Basic of Training",
-                        "06 Workouts  for Beginner"),
-                    newWorkouts(
-                        "onboarding_first.png",
-                        "Learn the Basic of Training",
-                        "06 Workouts  for Beginner"),
+                    NetWorkoutsWidget(
+                        imageUrl: "onboarding_first.png",
+                        title: "Learn the Basic of Training",
+                        subtitle: "06 Workouts for Beginner",
+                        rangeNumber: 4),
+                    NetWorkoutsWidget(
+                        imageUrl: "onboarding_first.png",
+                        title: "Learn the Basic of Training",
+                        subtitle: "06 Workouts for Beginner",
+                        rangeNumber: 5),
+                    NetWorkoutsWidget(
+                        imageUrl: "onboarding_first.png",
+                        title: "Learn the Basic of Training",
+                        subtitle: "06 Workouts for Beginner",
+                        rangeNumber: 5),
                   ],
                 ),
               ),
@@ -162,80 +180,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-Widget workoutCategoriy(String imageUrl, String title, String subtitle) {
-  return Row(
-    children: [
-      Container(
-        width: 350,
-        height: 190,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                image: AssetImage("assets/images/$imageUrl"),
-                fit: BoxFit.cover)),
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
-            ),
-            Text(
-              subtitle,
-              style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xffD0FD3E)),
-            ),
-          ],
-        ),
-      ),
-      const SizedBox(width: 20)
-    ],
-  );
-}
-
-Widget newWorkouts(String imageUrl, String title, String subtitle) {
-  return Row(
-    children: [
-      Container(
-        width: 200,
-        height: 190,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                image: AssetImage("assets/images/$imageUrl"),
-                fit: BoxFit.cover)),
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
-            ),
-            Text(
-              subtitle,
-              style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xffD0FD3E)),
-            ),
-          ],
-        ),
-      ),
-      const SizedBox(width: 20)
-    ],
-  );
 }

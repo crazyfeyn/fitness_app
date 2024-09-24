@@ -5,7 +5,6 @@ class UserService {
   final usersCollection = FirebaseFirestore.instance.collection('users');
   Future<void> addUser({required UserInfoModel userInfoModel}) async {
     try {
-      print('----');
       await usersCollection.add({
         'name': userInfoModel.name,
         'age': userInfoModel.age,
@@ -17,7 +16,6 @@ class UserService {
         'weight': userInfoModel.weight,
       });
     } catch (e) {
-      print('kirdi');
       rethrow;
     }
   }
