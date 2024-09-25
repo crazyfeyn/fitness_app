@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/theme/colors.dart';
 import 'package:flutter_application/modules/auth/blocs/auth_bloc.dart';
 import 'package:flutter_application/modules/auth/blocs/auth_events.dart';
-import 'package:flutter_application/modules/auth/blocs/auth_states.dart';
 import 'package:flutter_application/modules/profile/widgets/custom_list_item_widget.dart';
 import 'package:flutter_application/modules/profile/widgets/custom_list_widget.dart';
 import 'package:flutter_application/modules/profile/widgets/custom_subscription_widget.dart';
