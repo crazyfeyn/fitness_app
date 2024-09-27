@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-sealed class ProfileStates extends Equatable {
+abstract class ProfileStates extends Equatable {
   const ProfileStates();
 
   @override
@@ -8,12 +8,26 @@ sealed class ProfileStates extends Equatable {
 }
 
 class ProfileInitialState extends ProfileStates {}
+
 class ProfileLoadingState extends ProfileStates {}
 
-class ProfileLoadedState extends ProfileStates {}
+class ProfileUpdatedState extends ProfileStates {}
 
 class ProfileErrorState extends ProfileStates {
-  final String message;
+  final String error;
 
-  const ProfileErrorState(this.message);
+  const ProfileErrorState(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class UserProfileLoadedState extends ProfileStates {
+  final String? name;
+  final String? email;
+
+  const UserProfileLoadedState({this.name, this.email});
+
+  @override
+  List<Object?> get props => [name, email];
 }

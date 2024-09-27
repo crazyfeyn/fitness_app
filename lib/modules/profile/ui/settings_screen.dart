@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/theme/colors.dart';
-import 'package:flutter_application/modules/profile/widgets/custom_list_item_widget.dart';
+import 'package:flutter_application/modules/profile/ui/widgets/custom_list_item_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -42,18 +42,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: Column(
         children: [
           CustomListItemWidget(
-            title: "Units of Measure",
-            onTap: () {},
-            color: MyColors.whiteColor,
-            icon: Icons.arrow_forward_ios,
-          ),
-          CustomListItemWidget(
-            title: "Notifications",
-            onTap: () {},
-            color: MyColors.whiteColor,
-            icon: Icons.arrow_forward_ios,
-          ),
-          CustomListItemWidget(
             title: "Language",
             onTap: () {},
             color: MyColors.whiteColor,
@@ -61,7 +49,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           CustomListItemWidget(
             title: "Contact Us",
-            onTap: () {},
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        child: Text('This is a modal bottom sheet'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
             color: MyColors.whiteColor,
             icon: Icons.arrow_forward_ios,
           ),

@@ -6,6 +6,7 @@ import 'package:flutter_application/modules/auth/blocs/auth_events.dart';
 import 'package:flutter_application/modules/auth/blocs/auth_states.dart';
 import 'package:flutter_application/modules/auth/ui/widgets/auth_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -89,17 +90,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               BlocListener<AuthBloc, AuthState>(
                 listener: (context, state) {
                   if (state is AuthAuthenticated) {
-                    Navigator.pushReplacementNamed(
-                      context, 
-                      '/userInfoScreen',
-                      arguments: {
-                        'email': emailController.text,
-                        'password': passwordController.text,
-                      }
-                    );
+                    Navigator.pushReplacementNamed(context, '/userInfoScreen',
+                        arguments: {
+                          'email': emailController.text,
+                          'password': passwordController.text,
+                        });
                   } else if (state is AuthUnauthenticated) {
                     Navigator.pushReplacementNamed(context, '/registerScreen');
                   } else if (state is AuthError) {
+                    print(state.message);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.message)),
                     );

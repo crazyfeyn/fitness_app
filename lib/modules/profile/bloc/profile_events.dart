@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 
-sealed class ProfileEvents extends Equatable {
+abstract class ProfileEvents extends Equatable {
   const ProfileEvents();
 
   @override
   List<Object?> get props => [];
 }
 
-class EditProfileEvent extends ProfileEvents {
+class UpdateProfileEvent extends ProfileEvents {
   final String? name;
-  final String? email;
-  final String? photo;
 
-  const EditProfileEvent(
-      {required this.name, required this.email, required this.photo});
+  const UpdateProfileEvent({this.name});
+
+  @override
+  List<Object?> get props => [name];
 }

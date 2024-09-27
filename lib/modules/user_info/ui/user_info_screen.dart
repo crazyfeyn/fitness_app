@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/modules/user_info/model/user_info_model.dart';
 import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_bloc.dart';
@@ -14,7 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UserInfoScreen extends StatefulWidget {
   final String email;
   final String password;
-  const UserInfoScreen({super.key, required this.email, required this.password});
+  const UserInfoScreen(
+      {super.key, required this.email, required this.password});
 
   @override
   State<UserInfoScreen> createState() => _UserInfoScreenState();
@@ -29,6 +31,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   int height = 0;
   int goalIndex = 0;
   int activityLevelIndex = 0;
+
   List<String> goalList = [
     'Gain weight',
     'Lose weight',
@@ -36,6 +39,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     'Gain more flexible',
     'Learn the basic'
   ];
+
   List<String> activityLevelList = [
     'Rookie',
     'Beginner',
@@ -86,6 +90,11 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     });
   }
 
+  String? getCurrentUserUid() {
+    User? user = FirebaseAuth.instance.currentUser;
+    return user?.uid;
+  }
+
   void _nextPage() {
     if (_currentPage < 5) {
       _pageController.animateToPage(
@@ -97,21 +106,25 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
         _currentPage++;
       });
     } else {
-      context.read<OnboardingDeepBloc>().add(
-            OnboardingDeepSetUserInfoEvent(
-              UserInfoModel(
-                name: 'replacement name',
-                weight: weight + 1,
-                age: age + 1,
-                email: widget.email,
-                gender: isMale ? 'male' : 'female',
-                goal: goalList[goalIndex],
-                height: height + 1,
-                level: activityLevelList[activityLevelIndex],
+      String? uid = getCurrentUserUid();
+      if (uid != null) {
+        context.read<OnboardingDeepBloc>().add(
+              OnboardingDeepSetUserInfoEvent(
+                UserInfoModel(
+                  name: 'Teddy',
+                  weight: weight + 1,
+                  age: age + 1,
+                  email: widget.email,
+                  gender: isMale ? 'male' : 'female',
+                  goal: goalList[goalIndex],
+                  height: height + 1,
+                  level: activityLevelList[activityLevelIndex],
+                  uid: uid, // Use the retrieved UID
+                ),
               ),
-            ),
-          );
-      Navigator.pushReplacementNamed(context, '/homeScreen');
+            );
+        Navigator.pushReplacementNamed(context, '/homeScreen');
+      }
     }
   }
 
@@ -131,18 +144,18 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingDeepBloc, OnboardingDeepStates>(
-        builder: (context, state) {
-      if (state is OnboardingDeepLoadingState) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      if (state is OnboardingDeepErrorState) {
-        return Center(
-          child: Text(state.message),
-        );
-      }
-      return Scaffold(
+      builder: (context, state) {
+        if (state is OnboardingDeepLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is OnboardingDeepErrorState) {
+          return Center(
+            child: Text(state.message),
+          );
+        }
+        return Scaffold(
           backgroundColor: Colors.black,
           body: SafeArea(
             child: Padding(
@@ -190,24 +203,31 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
                         // Second page - Age selection
                         AgeSelector(
-                            currentIndex: age, onAgeSelect: onAgeSelect),
-                        //third page - Weight selection
+                          currentIndex: age,
+                          onAgeSelect: onAgeSelect,
+                        ),
+                        // Third page - Weight selection
                         WeightSelector(
-                            weight: weight, onWeightSelected: onWeightSelected),
-                        //fourth page - Weight selection
+                          weight: weight,
+                          onWeightSelected: onWeightSelected,
+                        ),
+                        // Fourth page - Height selection
                         HeightSelector(
-                            currentIndex: height,
-                            onHeightSelected: onHeightSelected),
-                        //fourth page - Weight selection
+                          currentIndex: height,
+                          onHeightSelected: onHeightSelected,
+                        ),
+                        // Fifth page - Goal selection
                         GoalSelector(
-                            currentIndex: goalIndex,
-                            onGoalSelected: onGoalSelected,
-                            goalList: goalList),
-                        //fifth page - Weight selection
+                          currentIndex: goalIndex,
+                          onGoalSelected: onGoalSelected,
+                          goalList: goalList,
+                        ),
+                        // Sixth page - Activity level selection
                         ActivitySelector(
-                            currentIndex: activityLevelIndex,
-                            onActivityLevelSelected: onActivityLevelSelected,
-                            activityLevelList: activityLevelList),
+                          currentIndex: activityLevelIndex,
+                          onActivityLevelSelected: onActivityLevelSelected,
+                          activityLevelList: activityLevelList,
+                        ),
                       ],
                     ),
                   ),
@@ -228,7 +248,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                 backgroundColor: const Color(0xFFD0FD3E),
                                 foregroundColor: Colors.black,
                               ),
-                              onPressed: _previousPage, // Move to next page
+                              onPressed: _previousPage,
                               child: const Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -252,29 +272,34 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                               backgroundColor: const Color(0xFFD0FD3E),
                               foregroundColor: Colors.black,
                             ),
-                            onPressed: _nextPage, // Move to next page
-                            child: const Row(
+                            onPressed: _nextPage,
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  "Next",
-                                  style: TextStyle(
+                                  _currentPage < 5 ? "Next" : "Done",
+                                  style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                Icon(Icons.keyboard_arrow_right),
+                                if (_currentPage >= 5) ...[
+                                  const SizedBox(width: 5),
+                                  const Icon(Icons.check),
+                                ],
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 }

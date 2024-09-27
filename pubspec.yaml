@@ -83,6 +83,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/animations/
+    - assets/icons/
     - assets/gifs/
     - assets/gifs/d1/
     - assets/gifs/d2/

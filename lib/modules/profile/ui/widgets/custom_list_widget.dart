@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/theme/colors.dart';
-import 'package:flutter_application/modules/profile/widgets/custom_list_item_widget.dart';
+import 'package:flutter_application/modules/profile/ui/widgets/custom_list_item_widget.dart';
 
 class CustomList extends StatelessWidget {
   const CustomList({super.key});

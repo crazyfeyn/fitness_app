@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  // Ro'yxatdan o'tish
   Future<User?> register(String email, String password) async {
     try {
       UserCredential userCredential =
@@ -11,8 +10,27 @@ class AuthService {
         email: email,
         password: password,
       );
+
       return userCredential.user;
     } catch (e) {
+      if (e is FirebaseAuthException) {
+        // Handle Firebase-specific errors
+        switch (e.code) {
+          case 'email-already-in-use':
+            print('The email is already in use.');
+            break;
+          case 'invalid-email':
+            print('The email address is not valid.');
+            break;
+          case 'weak-password':
+            print('The password is too weak.');
+            break;
+          default:
+            print('Firebase Auth Error: ${e.message}');
+        }
+      } else {
+        print('Unknown error: $e');
+      }
       rethrow;
     }
   }

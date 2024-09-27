@@ -16,18 +16,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final emailFocusNode = FocusNode();
+  final passwordFocusNode = FocusNode();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     checkAuth();
   }
-
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  final emailFocusNode = FocusNode();
-  final passwordFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -52,116 +50,120 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColors.backgroundColor,
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.47,
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/onboarding_first.png'),
-                    fit: BoxFit.fill,
-                    alignment: Alignment.topCenter,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: MyColors.backgroundColor,
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.47,
+                  padding: const EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/onboarding_first.png'),
+                      fit: BoxFit.fill,
+                      alignment: Alignment.topCenter,
+                    ),
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Welcome back!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
+                      ),
+                      Text(
+                        "Login with your credentials or use another account",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                    ],
                   ),
                 ),
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Welcome back!",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
+                BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthAuthenticated) {
+                      Navigator.pushReplacementNamed(context, '/homeScreen');
+                    } else if (state is AuthError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.message)),
+                      );
+                    }
+                  },
+                  child: Column(
+                    children: [
+                      AuthTextField(
+                        controller: emailController,
+                        label: "Email",
+                        validator: Validator.validateEmail,
+                        focusNode: emailFocusNode,
                       ),
-                    ),
-                    Text(
-                      "Login with your credentials or use another account",
-                      style: TextStyle(
-                        color: Colors.white,
+                      AuthTextField(
+                        controller: passwordController,
+                        label: "Password",
+                        isObscurely: true,
+                        textInputType: TextInputType.visiblePassword,
+                        validator: Validator.validatePassword,
+                        focusNode: passwordFocusNode,
                       ),
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              BlocListener<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  if (state is AuthAuthenticated) {
-                    Navigator.pushReplacementNamed(context, '/homeScreen');
-                  } else if (state is AuthError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.message)),
-                    );
-                  }
-                },
-                child: Column(
-                  children: [
-                    AuthTextField(
-                      controller: emailController,
-                      label: "Email",
-                      validator: Validator.validateEmail,
-                      focusNode: emailFocusNode,
-                    ),
-                    AuthTextField(
-                      controller: passwordController,
-                      label: "Password",
-                      isObscurely: true,
-                      textInputType: TextInputType.visiblePassword,
-                      validator: Validator.validatePassword,
-                      focusNode: passwordFocusNode,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: MyColors.greyColor,
-                        foregroundColor: MyColors.whiteColor,
-                        radius: 30,
-                        child: Icon(Icons.apple),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () =>
+                            Navigator.pushNamed(context, '/registerScreen'),
+                        child: const CircleAvatar(
+                          backgroundColor: MyColors.greyColor,
+                          foregroundColor: MyColors.whiteColor,
+                          radius: 30,
+                          child: Icon(Icons.apple),
+                        ),
                       ),
-                    ),
-                    FilledButton(
-                      style: FilledButton.styleFrom(
-                        overlayColor: MyColors.blackColor,
-                        fixedSize: const Size(145, 50),
-                        backgroundColor: MyColors.limeYellowColor,
-                      ),
-                      onPressed: _onTapLogin,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Login",
-                            style: TextStyle(
-                              color: MyColors.blackColor,
+                      FilledButton(
+                        style: FilledButton.styleFrom(
+                          overlayColor: MyColors.blackColor,
+                          fixedSize: const Size(145, 50),
+                          backgroundColor: MyColors.limeYellowColor,
+                        ),
+                        onPressed: _onTapLogin,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Login",
+                              style: TextStyle(
+                                color: MyColors.blackColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(Icons.arrow_forward_ios_sharp)
-                        ],
-                      ),
-                    )
-                  ],
+                            SizedBox(width: 10),
+                            Icon(Icons.arrow_forward_ios_sharp)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -6,6 +6,9 @@ import 'package:flutter_application/modules/auth/data/services/auth_service.dart
 import 'package:flutter_application/modules/auth/ui/login_screen.dart';
 import 'package:flutter_application/modules/auth/ui/register_screen.dart';
 import 'package:flutter_application/modules/home/ui/workout_screen.dart';
+import 'package:flutter_application/modules/profile/bloc/profile_bloc.dart';
+import 'package:flutter_application/modules/profile/data/repositories/profile_repository.dart';
+import 'package:flutter_application/modules/profile/data/services/profile_service.dart';
 import 'package:flutter_application/modules/profile/ui/edit_profile_screen.dart';
 import 'package:flutter_application/modules/profile/ui/privacy_policy_screen.dart';
 import 'package:flutter_application/modules/profile/ui/profile_screen.dart';
@@ -31,6 +34,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = AuthService();
     final authRepository = AuthRepository(authService: authService);
+    final profileService = ProfileService();
+    final profileRepository = ProfileRepository(profileService: profileService);
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (ctx) {
@@ -41,6 +46,9 @@ class MyApp extends StatelessWidget {
           }),
           BlocProvider(create: (ctx) {
             return AuthBloc(authRepository: authRepository);
+          }),
+          BlocProvider(create: (ctx) {
+            return ProfileBloc(profileRepository: profileRepository);
           }),
         ],
         child: MaterialApp(
