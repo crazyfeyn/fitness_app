@@ -16,21 +16,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthCheckEvent>(_onCheckAuth);
   }
 
-  Future<void> _onRegister(
-      AuthRegisterEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    try {
-      final user = await _authRepository.register(event.email, event.password);
-      print('Registered user: $user'); // Add this line for debugging
-      if (user != null) {
-        emit(AuthAuthenticated(user));
-      } else {
-        emit(AuthUnauthenticated());
-      }
-    } catch (e) {
-      emit(AuthError(e.toString()));
+  Future<void> _onRegister(AuthRegisterEvent event, Emitter<AuthState> emit) async {
+  emit(AuthLoading());
+  try {
+    final user = await _authRepository.register(event.email, event.password);
+    print('Registered user: $user'); // Add this line for debugging
+    if (user != null) {
+      emit(AuthAuthenticated(user));
+    } else {
+      emit(AuthUnauthenticated());
     }
+  } catch (e) {
+    emit(AuthError(e.toString()));
   }
+}
+
 
   Future<void> _onLogin(AuthLoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
