@@ -72,4 +72,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'fitness-app-687e3.appspot.com',
     iosBundleId: 'com.example.flutterApplication',
   );
+
 }

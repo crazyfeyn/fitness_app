@@ -20,7 +20,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   emit(AuthLoading());
   try {
     final user = await _authRepository.register(event.email, event.password);
-    print('Registered user: $user'); // Add this line for debugging
     if (user != null) {
       emit(AuthAuthenticated(user));
     } else {

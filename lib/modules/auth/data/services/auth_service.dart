@@ -14,7 +14,6 @@ class AuthService {
       return userCredential.user;
     } catch (e) {
       if (e is FirebaseAuthException) {
-        // Handle Firebase-specific errors
         switch (e.code) {
           case 'email-already-in-use':
             print('The email is already in use.');

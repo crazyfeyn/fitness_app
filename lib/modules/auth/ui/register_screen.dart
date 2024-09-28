@@ -98,7 +98,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   } else if (state is AuthUnauthenticated) {
                     Navigator.pushReplacementNamed(context, '/registerScreen');
                   } else if (state is AuthError) {
-                    print(state.message);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.message)),
                     );
@@ -138,29 +137,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            backgroundColor: MyColors.greyColor,
-                            foregroundColor: MyColors.whiteColor,
-                            radius: 30,
-                            child: const Icon(Icons.apple),
+                    FilledButton(
+                      style: FilledButton.styleFrom(
+                        overlayColor: MyColors.blackColor,
+                        fixedSize: const Size(145, 50),
+                        backgroundColor: MyColors.limeYellowColor,
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Back to login",
+                            style: TextStyle(
+                              color: MyColors.blackColor,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 20),
-                        GestureDetector(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            backgroundColor: MyColors.greyColor,
-                            foregroundColor: MyColors.whiteColor,
-                            radius: 30,
-                            child: const Icon(Icons.apple),
-                          ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                     FilledButton(
                       style: FilledButton.styleFrom(
@@ -169,9 +163,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         backgroundColor: MyColors.limeYellowColor,
                       ),
                       onPressed: _onTapRegister,
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             "Sign Up",
                             style: TextStyle(

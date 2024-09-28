@@ -128,14 +128,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () =>
+                      FilledButton(
+                        style: FilledButton.styleFrom(
+                          overlayColor: MyColors.blackColor,
+                          fixedSize: const Size(145, 50),
+                          backgroundColor: MyColors.limeYellowColor,
+                        ),
+                        onPressed: () =>
                             Navigator.pushNamed(context, '/registerScreen'),
-                        child: const CircleAvatar(
-                          backgroundColor: MyColors.greyColor,
-                          foregroundColor: MyColors.whiteColor,
-                          radius: 30,
-                          child: Icon(Icons.apple),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Register",
+                              style: TextStyle(
+                                color: MyColors.blackColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       FilledButton(
@@ -155,7 +165,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             SizedBox(width: 10),
-                            Icon(Icons.arrow_forward_ios_sharp)
+                            Icon(
+                              Icons.arrow_forward_ios_sharp,
+                              color: Colors.black,
+                            )
                           ],
                         ),
                       )
