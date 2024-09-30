@@ -6,7 +6,6 @@ import 'package:flutter_application/modules/profile/bloc/profile_states.dart';
 import 'package:flutter_application/modules/profile/ui/widgets/main_action_button_widget.dart';
 import 'package:flutter_application/modules/profile/ui/widgets/profile_detail_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditProfileScreen extends StatefulWidget {
