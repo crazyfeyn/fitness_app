@@ -17,11 +17,26 @@ void TelegramModalBottomSheet(BuildContext context) {
           children: [
             ElevatedButton(
               onPressed: () async {
-                final Uri telegramUrl = Uri.parse('https://t.me/toramurodov');
-                if (await canLaunchUrl(telegramUrl)) {
-                  await launchUrl(telegramUrl);
-                } else {
-                  throw 'Could not launch $telegramUrl';
+                final Uri telegramUrl = Uri.parse(
+                    'https://chatgpt.com/c/66fa1e0a-e450-8009-bf13-0712377c6b4d');
+                try {
+                  if (await canLaunchUrl(telegramUrl)) {
+                    await launchUrl(
+                      telegramUrl,
+                      mode: LaunchMode
+                          .externalApplication, // Ensure it opens externally
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Could not launch Telegram URL'),
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: $e')),
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(

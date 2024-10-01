@@ -3,7 +3,6 @@ import 'package:flutter_application/core/ui_kit/theme/colors.dart';
 import 'package:flutter_application/modules/profile/ui/widgets/custom_list_item_widget.dart';
 import 'package:flutter_application/modules/profile/ui/widgets/telegram_modal_bottom_sheet.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
