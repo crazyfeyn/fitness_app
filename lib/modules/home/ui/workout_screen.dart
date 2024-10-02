@@ -90,7 +90,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       _remainingTime = 0;
       if (isRest) {
         isRest = false;
-        _remainingTime = 3;
+        _remainingTime = 60;
       } else {
         if (_pageController.hasClients &&
             _pageController.page != null &&

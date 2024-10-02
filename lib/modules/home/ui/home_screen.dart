@@ -36,9 +36,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white),
                   ),
                   GestureDetector(
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/profileScreen'),
-                      child: const CircleAvatar(child: Icon(Icons.person)))
+                    onTap: () => Navigator.pushNamed(context, '/profileScreen'),
+                    child: Container(
+                      width: 58,
+                      height: 58,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color(0xffD0FD3E),
+                          width: 3,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/kakao.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
               const Text(

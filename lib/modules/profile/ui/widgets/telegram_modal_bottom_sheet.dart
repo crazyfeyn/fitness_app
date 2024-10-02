@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: non_constant_identifier_names
 void TelegramModalBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
@@ -17,22 +18,9 @@ void TelegramModalBottomSheet(BuildContext context) {
           children: [
             ElevatedButton(
               onPressed: () async {
-                final Uri telegramUrl = Uri.parse(
-                    'https://chatgpt.com/c/66fa1e0a-e450-8009-bf13-0712377c6b4d');
+                final Uri telegramUrl = Uri.parse('https://t.me/toramurodov');
                 try {
-                  if (await canLaunchUrl(telegramUrl)) {
-                    await launchUrl(
-                      telegramUrl,
-                      mode: LaunchMode
-                          .externalApplication, // Ensure it opens externally
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Could not launch Telegram URL'),
-                      ),
-                    );
-                  }
+                  launchUrl(telegramUrl, mode: LaunchMode.externalApplication);
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Error: $e')),
