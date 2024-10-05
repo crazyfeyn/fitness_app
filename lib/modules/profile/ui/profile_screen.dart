@@ -7,6 +7,7 @@ import 'package:flutter_application/modules/profile/ui/widgets/custom_list_widge
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -107,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const Gap(20),
             CustomListItemWidget(
               color: MyColors.redColor,
-              title: "Sign Out",
+              title: AppLocalizations.of(context)!.sign_out,
               onTap: () {
                 BlocProvider.of<AuthBloc>(context).add(AuthLogoutEvent());
                 Navigator.pushNamed(context, '/loginScreen');

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/functions/general_functions.dart';
 import 'package:flutter_application/modules/home/ui/widgets/net_workouts_widget.dart';
 import 'package:flutter_application/modules/home/ui/widgets/workout_category.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
-  //!username qabul qilib ol
   const HomeScreen({super.key});
 
   @override
@@ -14,8 +14,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final String userName = "Sarah";
 
+  String getGreeting(BuildContext context) {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return AppLocalizations.of(context)!.good_morning;
+    } else if (hour < 17) {
+      return AppLocalizations.of(context)!.good_afternoon;
+    } else if (hour < 20) {
+      return AppLocalizations.of(context)!.good_evening;
+    } else {
+      return AppLocalizations.of(context)!.good_night;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: const Color(0xff1C1C1E),
       body: Padding(
@@ -29,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "HELLO ${userName.toUpperCase()},",
+                    "${localizations.hello} $userName",
                     style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -63,9 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               ),
-              const Text(
-                "Good morning",
-                style: TextStyle(
+              Text(
+                getGreeting(context),
+                style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: Colors.white),
@@ -74,9 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Today Workout Plan",
-                    style: TextStyle(
+                  Text(
+                    localizations.today_workout_plan,
+                    style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
@@ -105,20 +119,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               AssetImage("assets/images/onboarding_first.png"),
                           fit: BoxFit.cover)),
                   padding: const EdgeInsets.all(20),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Day 01 - Warm Up",
-                        style: TextStyle(
+                        localizations.day,
+                        style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
                       ),
                       Text(
-                        "07:00 - 08:00 AM",
-                        style: TextStyle(
+                        localizations.time,
+                        style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             color: Color(0xffD0FD3E)),
@@ -128,19 +142,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 30),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Workout Categories",
-                    style: TextStyle(
+                    localizations.workout_categories,
+                    style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
                   ),
                   Text(
-                    "See All",
-                    style: TextStyle(
+                    localizations.see_all,
+                    style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
                         color: Color(0xffD0FD3E)),
@@ -148,27 +162,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     WorkoutCategoryWidget(
                         imageUrl: "onboarding_first.png",
-                        title: "Learn the Basic of Training",
-                        subtitle: "06 Workouts for Beginner",
+                        title: localizations.learn_basic_training,
+                        subtitle: localizations.workouts_for_beginner,
                         rangeNumber: 2),
                     WorkoutCategoryWidget(
                         imageUrl: "onboarding_first.png",
-                        title: "Learn the Basic of Training",
-                        subtitle: "06 Workouts for Beginner",
+                        title: localizations.learn_basic_training,
+                        subtitle: localizations.workouts_for_beginner,
                         rangeNumber: 3),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                "New Workouts",
-                style: TextStyle(
+              Text(
+                localizations.new_workouts,
+                style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                     color: Colors.white),
@@ -176,23 +190,23 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: const Row(
+                child: Row(
                   children: [
                     NetWorkoutsWidget(
-                        imageUrl: "onboarding_first.png",
-                        title: "Learn the Basic of Training",
-                        subtitle: "06 Workouts for Beginner",
-                        rangeNumber: 4),
+                        imageUrl: 'onboarding_first.png',
+                        titleKey: 'workouts_for_beginner',
+                        subtitleKey: 'new_workouts',
+                        rangeNumber: 1),
                     NetWorkoutsWidget(
-                        imageUrl: "onboarding_first.png",
-                        title: "Learn the Basic of Training",
-                        subtitle: "06 Workouts for Beginner",
-                        rangeNumber: 5),
+                        imageUrl: 'onboarding_first.png',
+                        titleKey: 'workouts_for_beginner',
+                        subtitleKey: 'new_workouts',
+                        rangeNumber: 1),
                     NetWorkoutsWidget(
-                        imageUrl: "onboarding_first.png",
-                        title: "Learn the Basic of Training",
-                        subtitle: "06 Workouts for Beginner",
-                        rangeNumber: 5),
+                        imageUrl: 'onboarding_first.png',
+                        titleKey: 'workouts_for_beginner',
+                        subtitleKey: 'new_workouts',
+                        rangeNumber: 1),
                   ],
                 ),
               ),

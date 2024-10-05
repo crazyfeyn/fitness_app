@@ -7,6 +7,7 @@ import 'package:flutter_application/modules/profile/ui/widgets/main_action_butto
 import 'package:flutter_application/modules/profile/ui/widgets/profile_detail_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; 
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -49,7 +50,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
         title: Text(
-          "EDIT PROFILE",
+          AppLocalizations.of(context)!.edit_profile, 
           style: GoogleFonts.openSans(
             color: MyColors.whiteColor,
             fontWeight: FontWeight.w700,
@@ -60,12 +61,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         listener: (context, state) {
           if (state is ProfileUpdatedState) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Profile updated successfully!')),
+              SnackBar(
+                  content: Text(
+                      AppLocalizations.of(context)!.profile_updated_success)),
             );
           } else if (state is ProfileErrorState) {
             print(state.error);
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.error}')),
+              SnackBar(
+                  content: Text(AppLocalizations.of(context)!
+                      .profile_error(state.error))),
             );
           }
         },
@@ -94,7 +99,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
               ProfileDetailWidget(
-                label: "Name",
+                label: AppLocalizations.of(context)!
+                    .name_label, 
                 initialValue: _nameController.text,
                 onChanged: (value) {
                   _nameController.text = value;
@@ -121,7 +127,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 );
           },
-          labelText: "Save",
+          labelText: AppLocalizations.of(context)!
+              .save_label,
         ),
       ),
     );

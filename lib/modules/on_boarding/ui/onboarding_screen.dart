@@ -4,6 +4,7 @@ import 'package:flutter_application/modules/on_boarding/cubit/on_boarding_cubit.
 import 'package:flutter_application/modules/on_boarding/ui/widgets/indicator_widget.dart';
 import 'package:flutter_application/modules/on_boarding/ui/widgets/onboarding_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import generated localization file
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -14,18 +15,29 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
-  final int _currentIndex = 0;
-  List<OnboardingWidget> pages = [
-    OnboardingWidget(
-        imagePath: 'onboarding_first.png',
-        text: 'Meet your coach, Start your journey'),
-    OnboardingWidget(
-        imagePath: 'onboarding_second.png',
-        text: 'Create a workout plan to stay fit'),
-    OnboardingWidget(
-        imagePath: 'onboarding_third.png',
-        text: 'Action is the key to all success'),
-  ];
+  List<OnboardingWidget> pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      OnboardingWidget(
+          imagePath: 'onboarding_first.png',
+          text: AppLocalizations.of(context)!.onboarding_title_1),
+      OnboardingWidget(
+          imagePath: 'onboarding_second.png',
+          text: AppLocalizations.of(context)!.onboarding_title_2),
+      OnboardingWidget(
+          imagePath: 'onboarding_third.png',
+          text: AppLocalizations.of(context)!.onboarding_title_3),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose(); // Dispose of the PageController
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   curve: Curves.easeInOut,
                 );
               } else {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const HomeScreen()));
@@ -84,7 +96,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: 410,
               height: 55,
               child: Text(
-                _currentIndex != 2 ? 'Next' : 'Get started',
+                context.watch<OnboardingCubit>().currentIndex() != 2
+                    ? AppLocalizations.of(context)!.next
+                    : AppLocalizations.of(context)!.get_started,
                 style: const TextStyle(
                   color: Color(0xFF373941),
                   fontWeight: FontWeight.w500,

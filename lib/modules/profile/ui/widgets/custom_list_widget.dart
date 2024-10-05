@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/theme/colors.dart';
 import 'package:flutter_application/modules/profile/ui/widgets/custom_list_item_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomList extends StatelessWidget {
   const CustomList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, VoidCallback>> items = [
+    List<Map<String, VoidCallback>> items = [
       {
-        "Edit Profile": () =>
+        AppLocalizations.of(context)!.edit_profile: () =>
             Navigator.pushNamed(context, '/editProfileScreen'),
       },
       {
-        "Privacy Policy": () =>
+        AppLocalizations.of(context)!.privacy_policy: () =>
             Navigator.pushNamed(context, '/privacyPolicyScreen'),
       },
       {
-        "Settings": () => Navigator.pushNamed(context, '/settingsScreen'),
+        AppLocalizations.of(context)!.settings: () =>
+            Navigator.pushNamed(context, '/settingsScreen'),
       },
     ];
 

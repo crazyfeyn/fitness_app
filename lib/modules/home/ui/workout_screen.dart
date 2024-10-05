@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/core/constants/workouts.dart';
 import 'package:flutter_application/modules/home/ui/widgets/rest_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; 
 
 class WorkoutScreen extends StatefulWidget {
   final int rangeNumber;
 
-  const WorkoutScreen({super.key, required this.rangeNumber});
+   const WorkoutScreen({super.key, required this.rangeNumber});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -81,10 +82,6 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
     });
   }
 
-  void resetCounter() {
-    setState(() {});
-  }
-
   void _handleSkip() {
     setState(() {
       _remainingTime = 0;
@@ -117,6 +114,9 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations =
+        AppLocalizations.of(context)!; 
+
     return Scaffold(
       backgroundColor:
           isRest ? const Color(0xFF005FFF) : const Color(0xFFFCFCFE),
@@ -144,9 +144,10 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                               bottomRight: Radius.circular(50),
                             ),
                           ),
-                          child: const Text(
-                            'Congratulations, you completed the daily workouts!',
-                            style: TextStyle(
+                          child: Text(
+                            localizations
+                                .workoutCompleted, // Use localized string
+                            style: const TextStyle(
                               fontSize: 27,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -218,18 +219,14 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                               topRight: Radius.circular(30),
                             ),
                           ),
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Start Exercising!',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            localizations
+                                .startExercising, // Use localized string
+                            style: const TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                     ],

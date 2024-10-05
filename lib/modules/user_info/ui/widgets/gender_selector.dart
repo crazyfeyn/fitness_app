@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; 
 
 class GenderSelector extends StatelessWidget {
   final bool isMale;
   final Function(bool) onGenderSelected;
 
   const GenderSelector({
-    Key? key,
+    super.key,
     required this.isMale,
     required this.onGenderSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class GenderSelector extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            onGenderSelected(true); // Set to Male
+            onGenderSelected(true);
           },
           child: Container(
             width: 140,
@@ -34,7 +35,7 @@ class GenderSelector extends StatelessWidget {
                   color: isMale ? Colors.black : Colors.white,
                 ),
                 Text(
-                  "Male",
+                  AppLocalizations.of(context)!.male, // Use localized string
                   style: TextStyle(
                     fontSize: 15,
                     color: isMale ? Colors.black : Colors.white,
@@ -65,7 +66,7 @@ class GenderSelector extends StatelessWidget {
                   color: isMale ? Colors.white : Colors.black,
                 ),
                 Text(
-                  "Female",
+                  AppLocalizations.of(context)!.female, // Use localized string
                   style: TextStyle(
                     fontSize: 15,
                     color: isMale ? Colors.white : Colors.black,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/core/ui_kit/theme/colors.dart';
 import 'package:flutter_application/modules/profile/ui/widgets/custom_list_item_widget.dart';
+import 'package:flutter_application/modules/profile/ui/widgets/language_changer_widget.dart';
 import 'package:flutter_application/modules/profile/ui/widgets/telegram_modal_bottom_sheet.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -14,6 +16,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: MyColors.backgroundColor,
       appBar: AppBar(
@@ -33,23 +37,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
         title: Text(
-          "SETTINGS",
+          localizations.settings,
           style: GoogleFonts.openSans(
             color: MyColors.whiteColor,
             fontWeight: FontWeight.w700,
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           CustomListItemWidget(
-            title: "Language",
-            onTap: () {},
+            title: localizations.language,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return LanguageChangerWidget(
+                    onLanguageSelected: () {
+                      setState(() {});
+                    },
+                  );
+                },
+              );
+            },
             color: MyColors.whiteColor,
             icon: Icons.arrow_forward_ios,
           ),
           CustomListItemWidget(
-            title: "Contact Us",
+            title: localizations.contact_us,
             onTap: () async => TelegramModalBottomSheet(context),
             color: MyColors.whiteColor,
             icon: Icons.arrow_forward_ios,

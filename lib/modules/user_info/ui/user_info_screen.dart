@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application/modules/user_info/model/user_info_model.dart';
 import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_bloc.dart';
 import 'package:flutter_application/modules/user_info/ui/bloc/onboarding_deep_events.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_application/modules/user_info/ui/widgets/gender_selector
 import 'package:flutter_application/modules/user_info/ui/widgets/goal_selector.dart';
 import 'package:flutter_application/modules/user_info/ui/widgets/height_selector.dart';
 import 'package:flutter_application/modules/user_info/ui/widgets/weight_selector.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; 
 
 class UserInfoScreen extends StatefulWidget {
   final String email;
@@ -119,7 +120,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   goal: goalList[goalIndex],
                   height: height + 1,
                   level: activityLevelList[activityLevelIndex],
-                  uid: uid, // Use the retrieved UID
+                  uid: uid,
                 ),
               ),
             );
@@ -170,9 +171,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         Column(
                           children: [
                             const SizedBox(height: 80),
-                            const Text(
-                              "Tell us about yourself!",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.userInfoTitle,
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontFamily: "Integral CF",
                                 fontWeight: FontWeight.w700,
@@ -180,12 +181,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                 height: 2.5,
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 65),
+                             Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 65),
                               child: Text(
-                                "To give you a better experience we need to know your gender",
+                                AppLocalizations.of(context)!.userInfoSubtitle,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 13,
                                   fontFamily: "Integral CF",
                                   color: Colors.white,
@@ -201,12 +202,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           ],
                         ),
 
-                        // Second page - Age selection
                         AgeSelector(
                           currentIndex: age,
                           onAgeSelect: onAgeSelect,
                         ),
-                        // Third page - Weight selection
                         WeightSelector(
                           weight: weight,
                           onWeightSelected: onWeightSelected,
@@ -231,64 +230,22 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 15),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
-                      mainAxisAlignment: _currentPage > 0
-                          ? MainAxisAlignment.spaceBetween
-                          : MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if (_currentPage > 0)
-                          SizedBox(
-                            width: 120,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFD0FD3E),
-                                foregroundColor: Colors.black,
-                              ),
-                              onPressed: _previousPage,
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "Pre",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Icon(Icons.keyboard_arrow_left),
-                                ],
-                              ),
-                            ),
-                          ),
-                        SizedBox(
-                          width: 120,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFD0FD3E),
-                              foregroundColor: Colors.black,
-                            ),
-                            onPressed: _nextPage,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  _currentPage < 5 ? "Next" : "Done",
-                                  style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                if (_currentPage >= 5) ...[
-                                  const SizedBox(width: 5),
-                                  const Icon(Icons.check),
-                                ],
-                              ],
-                            ),
+                        TextButton(
+                          onPressed: _previousPage,
+                          child: const Text("Previous"),
+                        ),
+                        TextButton(
+                          onPressed: _nextPage,
+                          child: Text(
+                            _currentPage < 5
+                                ? AppLocalizations.of(context)!.next
+                                : AppLocalizations.of(context)!.done,
                           ),
                         ),
                       ],
@@ -301,5 +258,11 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }

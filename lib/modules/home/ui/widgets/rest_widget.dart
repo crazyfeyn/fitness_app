@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import your localization class
 
 class RestWidget extends StatefulWidget {
   final int remainingTime;
@@ -59,14 +60,12 @@ class _RestWidgetState extends State<RestWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Skip Rest?'),
-          content: const Text('Are you sure you want to skip the rest period?'),
+          title: Text(AppLocalizations.of(context)!.skip),
+          content: Text(AppLocalizations.of(context)!.skipRestConfirmation),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () {
@@ -76,7 +75,7 @@ class _RestWidgetState extends State<RestWidget> {
                 widget.onSkipRest();
                 Navigator.of(context).pop();
               },
-              child: const Text('Skip'),
+              child: Text(AppLocalizations.of(context)!.skip),
             ),
           ],
         );
@@ -92,6 +91,8 @@ class _RestWidgetState extends State<RestWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Expanded(
       child: Column(
         children: [
@@ -109,9 +110,9 @@ class _RestWidgetState extends State<RestWidget> {
                         bottomRight: Radius.circular(50),
                       ),
                     ),
-                    child: const Text(
-                      'RESTING TIME',
-                      style: TextStyle(
+                    child: Text(
+                      localizations.restingTime, // Localized string for "RESTING TIME"
+                      style: const TextStyle(
                         fontSize: 28,
                         color: Color(0xFF3375FF),
                         fontWeight: FontWeight.bold,
@@ -162,9 +163,9 @@ class _RestWidgetState extends State<RestWidget> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              _remainingTime += 20;
+                              _remainingTime += 10; // Change to 10 seconds as per the localization
                             });
-                            widget.onAddTime(20);
+                            widget.onAddTime(10);
                           },
                           child: Container(
                             width: 250,
@@ -174,9 +175,9 @@ class _RestWidgetState extends State<RestWidget> {
                               color: const Color(0xFF3375FF),
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: const Text(
-                              '+20s',
-                              style: TextStyle(
+                            child: Text(
+                              '+10 ${localizations.seconds}', // Localized text for adding time
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -195,9 +196,9 @@ class _RestWidgetState extends State<RestWidget> {
                               color: const Color(0xFF3375FF),
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: const Text(
-                              'SKIP',
-                              style: TextStyle(
+                            child: Text(
+                              localizations.skip, // Localized text for skipping
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
