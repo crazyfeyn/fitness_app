@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/core/constants/workouts.dart';
 import 'package:flutter_application/modules/home/ui/widgets/rest_widget.dart';
 import 'package:lottie/lottie.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WorkoutScreen extends StatefulWidget {
   final int rangeNumber;
 
-   const WorkoutScreen({super.key, required this.rangeNumber});
+  const WorkoutScreen({super.key, required this.rangeNumber});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -114,8 +114,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations =
-        AppLocalizations.of(context)!; 
+    final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor:
@@ -145,8 +144,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                             ),
                           ),
                           child: Text(
-                            localizations
-                                .workoutCompleted, // Use localized string
+                            localizations.workoutCompleted,
                             style: const TextStyle(
                               fontSize: 27,
                               color: Colors.white,

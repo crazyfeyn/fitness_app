@@ -111,7 +111,7 @@ class _RestWidgetState extends State<RestWidget> {
                       ),
                     ),
                     child: Text(
-                      localizations.restingTime, // Localized string for "RESTING TIME"
+                      localizations.restingTime,
                       style: const TextStyle(
                         fontSize: 28,
                         color: Color(0xFF3375FF),
@@ -163,7 +163,8 @@ class _RestWidgetState extends State<RestWidget> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              _remainingTime += 10; // Change to 10 seconds as per the localization
+                              _remainingTime +=
+                                  10; // Change to 10 seconds as per the localization
                             });
                             widget.onAddTime(10);
                           },

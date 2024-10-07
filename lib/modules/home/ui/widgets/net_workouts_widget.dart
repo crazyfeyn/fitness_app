@@ -3,22 +3,21 @@ import 'package:flutter_application/l10n/l10n.dart';
 
 class NetWorkoutsWidget extends StatelessWidget {
   final String imageUrl;
-  final String titleKey; // Change to a key for localization
-  final String subtitleKey; // Change to a key for localization
+  final String titleKey;
+  final String subtitleKey;
   final int rangeNumber;
 
   const NetWorkoutsWidget({
     super.key,
     required this.imageUrl,
-    required this.titleKey, // Use titleKey for localization
-    required this.subtitleKey, // Use subtitleKey for localization
+    required this.titleKey,
+    required this.subtitleKey,
     required this.rangeNumber,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Access localized strings using the localization method or package
-    final localizations = Localizations.of(context, L10n); // Replace with your localization class
+    final localizations = Localizations.of(context, L10n);
 
     return GestureDetector(
       onTap: () => Navigator.pushNamed(
@@ -43,18 +42,16 @@ class NetWorkoutsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Use localized title
                 Text(
-                  localizations?.translate(titleKey) ?? titleKey, // Replace with your localization method
+                  localizations?.translate(titleKey) ?? titleKey,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
                 ),
-                // Use localized subtitle
                 Text(
-                  localizations?.translate(subtitleKey) ?? subtitleKey, // Replace with your localization method
+                  localizations?.translate(subtitleKey) ?? subtitleKey,
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
