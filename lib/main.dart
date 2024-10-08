@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             routes: {
-              '/homeScreen': (context) => const HomeScreen(),
+              '/homeScreen': (context) => HomeScreen(),
               '/splashScreen': (context) => const SplashScreen(),
               '/onboardingScreen': (context) => const OnboardingScreen(),
               '/userInfoScreen': (context) {

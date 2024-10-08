@@ -25,6 +25,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordFocusNode = FocusNode();
   final passwordAgainFocusNode = FocusNode();
 
+  bool _isRegistering = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -38,6 +40,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> _onTapRegister() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isRegistering = true;
+      });
+
       BlocProvider.of<AuthBloc>(context).add(
         AuthRegisterEvent(emailController.text, passwordController.text),
       );
@@ -48,139 +54,156 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.backgroundColor,
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.47,
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/onboarding_first.png'),
-                    fit: BoxFit.fill,
-                    alignment: Alignment.topCenter,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.47,
+                  padding: const EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/onboarding_first.png'),
+                      fit: BoxFit.fill,
+                      alignment: Alignment.topCenter,
+                    ),
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hello rookies,",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
+                      ),
+                      Text(
+                        "Enter your informations below or login with a other account",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                    ],
                   ),
                 ),
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hello rookies,",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
+                BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthAuthenticated) {
+                      setState(() {
+                        _isRegistering = false; // Reset state on success
+                      });
+                      Navigator.pushReplacementNamed(context, '/userInfoScreen',
+                          arguments: {
+                            'email': emailController.text,
+                            'password': passwordController.text,
+                          });
+                    } else if (state is AuthUnauthenticated) {
+                      setState(() {
+                        _isRegistering = false;
+                      });
+                      Navigator.pushReplacementNamed(
+                          context, '/registerScreen');
+                    } else if (state is AuthError) {
+                      setState(() {
+                        _isRegistering = false;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.message)),
+                      );
+                    }
+                  },
+                  child: Column(
+                    children: [
+                      AuthTextField(
+                        controller: emailController,
+                        label: "Email",
+                        validator: Validator.validateEmail,
+                        focusNode: emailFocusNode,
                       ),
-                    ),
-                    Text(
-                      "Enter your informations below or login with a other account",
-                      style: TextStyle(
-                        color: Colors.white,
+                      AuthTextField(
+                        controller: passwordController,
+                        label: "Password",
+                        isObscurely: true,
+                        textInputType: TextInputType.visiblePassword,
+                        validator: Validator.validatePassword,
+                        focusNode: passwordFocusNode,
                       ),
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                  ],
+                      AuthTextField(
+                        controller: passwordAgainController,
+                        isObscurely: true,
+                        label: "Password again",
+                        textInputType: TextInputType.visiblePassword,
+                        validator: (value) => Validator.validateConfirmPassword(
+                            value, passwordController.text),
+                        focusNode: passwordAgainFocusNode,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              BlocListener<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  if (state is AuthAuthenticated) {
-                    Navigator.pushReplacementNamed(context, '/userInfoScreen',
-                        arguments: {
-                          'email': emailController.text,
-                          'password': passwordController.text,
-                        });
-                  } else if (state is AuthUnauthenticated) {
-                    Navigator.pushReplacementNamed(context, '/registerScreen');
-                  } else if (state is AuthError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.message)),
-                    );
-                  }
-                },
-                child: Column(
-                  children: [
-                    AuthTextField(
-                      controller: emailController,
-                      label: "Email",
-                      validator: Validator.validateEmail,
-                      focusNode: emailFocusNode,
-                    ),
-                    AuthTextField(
-                      controller: passwordController,
-                      label: "Password",
-                      isObscurely: true,
-                      textInputType: TextInputType.visiblePassword,
-                      validator: Validator.validatePassword,
-                      focusNode: passwordFocusNode,
-                    ),
-                    AuthTextField(
-                      controller: passwordAgainController,
-                      isObscurely: true,
-                      label: "Password again",
-                      textInputType: TextInputType.visiblePassword,
-                      validator: (value) => Validator.validateConfirmPassword(
-                          value, passwordController.text),
-                      focusNode: passwordAgainFocusNode,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FilledButton(
-                      style: FilledButton.styleFrom(
-                        overlayColor: MyColors.blackColor,
-                        fixedSize: const Size(145, 50),
-                        backgroundColor: MyColors.limeYellowColor,
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Back to login",
-                            style: TextStyle(
-                              color: MyColors.blackColor,
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FilledButton(
+                        style: FilledButton.styleFrom(
+                          overlayColor: MyColors.blackColor,
+                          fixedSize: const Size(145, 50),
+                          backgroundColor: MyColors.limeYellowColor,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Back to login",
+                              style: TextStyle(
+                                color: MyColors.blackColor,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    FilledButton(
-                      style: FilledButton.styleFrom(
-                        overlayColor: MyColors.blackColor,
-                        fixedSize: const Size(145, 50),
-                        backgroundColor: MyColors.limeYellowColor,
-                      ),
-                      onPressed: _onTapRegister,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: MyColors.blackColor,
+                      FilledButton(
+                        style: FilledButton.styleFrom(
+                          overlayColor: MyColors.blackColor,
+                          fixedSize: const Size(145, 50),
+                          backgroundColor: MyColors.limeYellowColor,
+                        ),
+                        onPressed: _isRegistering
+                            ? null
+                            : _onTapRegister, // Disable button if registering
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _isRegistering ? "Signing Up..." : "Sign Up",
+                              style: const TextStyle(
+                                color: MyColors.blackColor,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(Icons.arrow_forward_ios_sharp)
-                        ],
+                            const SizedBox(width: 10),
+                            if (_isRegistering)
+                              const CircularProgressIndicator(strokeWidth: 2),
+                            if (!_isRegistering)
+                              const Icon(Icons.arrow_forward_ios_sharp),
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

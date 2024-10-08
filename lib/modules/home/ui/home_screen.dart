@@ -4,15 +4,23 @@ import 'package:flutter_application/modules/home/ui/widgets/net_workouts_widget.
 import 'package:flutter_application/modules/home/ui/widgets/workout_category.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  String? inputUserName;
+  HomeScreen({super.key, String? inputUserName});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String userName = "Sarah";
+  late String userName;
+
+  @override
+  void initState() {
+    super.initState();
+    userName = widget.inputUserName ?? "Sarah";
+  }
 
   String getGreeting(BuildContext context) {
     final hour = DateTime.now().hour;
@@ -115,8 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: const DecorationImage(
-                          image:
-                              AssetImage("assets/images/onboarding_first.png"),
+                          image: AssetImage("assets/images/t1.png"),
                           fit: BoxFit.cover)),
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -167,12 +174,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     WorkoutCategoryWidget(
-                        imageUrl: "onboarding_first.png",
+                        imageUrl: "t1.png",
                         title: localizations.learn_basic_training,
                         subtitle: localizations.workouts_for_beginner,
                         rangeNumber: 2),
                     WorkoutCategoryWidget(
-                        imageUrl: "onboarding_first.png",
+                        imageUrl: "t1.png",
                         title: localizations.learn_basic_training,
                         subtitle: localizations.workouts_for_beginner,
                         rangeNumber: 3),
@@ -188,23 +195,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white),
               ),
               const SizedBox(height: 20),
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     NetWorkoutsWidget(
-                        imageUrl: 'onboarding_first.png',
-                        titleKey: 'workouts_for_beginner',
+                        imageUrl: 't1.png',
+                        titleKey: localizations.workouts_for_beginner,
                         subtitleKey: 'new_workouts',
                         rangeNumber: 1),
                     NetWorkoutsWidget(
-                        imageUrl: 'onboarding_first.png',
-                        titleKey: 'workouts_for_beginner',
+                        imageUrl: 't1.png',
+                        titleKey: localizations.workouts_for_beginner,
                         subtitleKey: 'new_workouts',
                         rangeNumber: 1),
                     NetWorkoutsWidget(
-                        imageUrl: 'onboarding_first.png',
-                        titleKey: 'workouts_for_beginner',
+                        imageUrl: 't1.png',
+                        titleKey: localizations.workouts_for_beginner,
                         subtitleKey: 'new_workouts',
                         rangeNumber: 1),
                   ],

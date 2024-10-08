@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/modules/home/ui/home_screen.dart';
 import 'package:flutter_application/modules/on_boarding/cubit/on_boarding_cubit.dart';
@@ -84,7 +86,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const HomeScreen()));
+                        builder: (context) => HomeScreen(
+                              inputUserName: FirebaseAuth
+                                  .instance.currentUser?.displayName,
+                            )));
               }
             },
             child: Container(

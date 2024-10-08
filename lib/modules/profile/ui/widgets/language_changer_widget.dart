@@ -16,6 +16,8 @@ class LanguageChangerWidget extends StatefulWidget {
 }
 
 class _LanguageChangerWidgetState extends State<LanguageChangerWidget> {
+  int selectedIndex = LanguagesList.currentLanguageIndex;
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
@@ -35,16 +37,16 @@ class _LanguageChangerWidgetState extends State<LanguageChangerWidget> {
             ),
           ),
           const SizedBox(height: 10),
-          _buildLanguageOption(context, localizations.english, 'en'),
-          _buildLanguageOption(context, localizations.uzbek, 'uz'),
-          _buildLanguageOption(context, localizations.russian, 'ru'),
+          _buildLanguageOption(context, localizations.english, 'en', 0),
+          _buildLanguageOption(context, localizations.uzbek, 'uz', 1),
+          _buildLanguageOption(context, localizations.russian, 'ru', 2),
         ],
       ),
     );
   }
 
   Widget _buildLanguageOption(
-      BuildContext context, String language, String localeCode) {
+      BuildContext context, String language, String localeCode, int index) {
     return ListTile(
       title: Text(
         language,
@@ -53,19 +55,20 @@ class _LanguageChangerWidgetState extends State<LanguageChangerWidget> {
           fontSize: 16,
         ),
       ),
+      trailing: selectedIndex == index
+          ? const Icon(Icons.check, color: MyColors.whiteColor)
+          : null,
       onTap: () {
-        int selectedIndex = LanguagesList.languagesList.indexOf(localeCode);
-        if (selectedIndex != -1) {
-          setState(() {
-            LanguagesList.currentLanguageIndex = selectedIndex;
-          });
+        setState(() {
+          selectedIndex = index;
+          LanguagesList.currentLanguageIndex = selectedIndex;
+        });
 
-          Provider.of<LocaleProvider>(context, listen: false)
-              .setLocale(Locale(localeCode));
+        Provider.of<LocaleProvider>(context, listen: false)
+            .setLocale(Locale(localeCode));
 
-          Navigator.of(context).pop();
-          widget.onLanguageSelected();
-        }
+        Navigator.of(context).pop();
+        widget.onLanguageSelected();
       },
     );
   }
